@@ -19,9 +19,9 @@ describe('DeployAContract', () => {
   });
 
   it('exploit', async () => {
-    /**
-     * YOUR CODE HERE
-     * */
+    expect(await target.isComplete()).to.equal(false);
+
+    target.callme();
 
     expect(await target.isComplete()).to.equal(true);
   });

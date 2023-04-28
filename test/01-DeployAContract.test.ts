@@ -10,13 +10,13 @@ describe('DeployAContract', () => {
 
   before(async () => {
     [attacker, deployer] = await ethers.getSigners();
+
+    target = await (await ethers.getContractFactory('DeployChallenge', deployer)).deploy();
+
+    await target.deployed();
   });
 
   it('exploit', async () => {
-    /**
-     * YOUR CODE HERE
-     * */
-
     expect(await target.isComplete()).to.equal(true);
   });
 });

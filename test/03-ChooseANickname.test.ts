@@ -26,10 +26,11 @@ describe('DeployAContract', () => {
   });
 
   it('exploit', async () => {
-    /**
-     * YOUR CODE HERE
-     * */
+    const nickname = ethers.utils.formatBytes32String('thomas');
 
+    await captureTheEther.connect(attacker).setNickname(nickname);
+
+    expect(await captureTheEther.nicknameOf(attacker.address)).to.equal('0x74686f6d61730000000000000000000000000000000000000000000000000000');
     expect(await target.isComplete()).to.equal(true);
   });
 });

@@ -31,9 +31,13 @@ describe('GuessTheNewNumberChallenge', () => {
       await ethers.getContractFactory('GuessTheNewNumberSolver', attacker)
     ).deploy(target.address);
 
+    console.log('Target Solver owner: ', await targetSolver.owner());
+    console.log('Attacker: ', attacker.address);
+
     targetSolver = await targetSolver.connect(attacker);
 
-    targetSolver.solve();
+    // await targetSolver.solve();
+    await targetSolver.solve({value: utils.parseEther('1')});
 
     expect(await provider.getBalance(target.address)).to.equal(0);
   });

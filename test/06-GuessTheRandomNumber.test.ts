@@ -27,7 +27,7 @@ describe('GuessTheRandomNumberChallenge', () => {
 
     // First approach: Use a loop to brute force the random number since it's a uint8
     // Note: This does not work because each guess requires sending 1 ether to the contract!
-    // However, it is usefulf for double-checking the answer.
+    // However, it is useful for double-checking the answer.
 
     // let targetBalance = await provider.getBalance(target.address);
     // let randomNumber = 0;

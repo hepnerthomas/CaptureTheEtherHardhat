@@ -25,7 +25,7 @@
     "fuzzy-identity": "npx hardhat test ./test/16-fuzzy-identity.test.ts",
     "public-key": "npx hardhat test ./test/17-PublicKey.test.ts",
     "assume-ownership": "npx hardhat test ./test/18-AssumeOwnership.test.ts",
-    "token-bank": "npx hardhat test ./test/19-TokenBank.test.ts"
+    "token-bank": "npx hardhat test ./test/20-TokenBank.test.ts"
   },
   "dependencies": {
     "@ethersproject/abi": "^5.7.0",

